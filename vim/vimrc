@@ -173,7 +173,7 @@ let g:ale_virtualtext_cursor = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ruby
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>ry orequire "pry"; binding.pry<ESC>
+map <leader>ry obinding.pry<ESC>
 
 function s:run_single_ruby_test()
     let linenum = line('.')
@@ -251,6 +251,7 @@ let python_highlight_all=1
 highlight Normal ctermbg=NONE guibg=NONE
 highlight SignColumn ctermbg=NONE guibg=NONE
 highlight LineNr ctermbg=NONE guibg=NONE
+highlight StatusLineNC cterm=bold ctermfg=white ctermbg=darkgray
 
 " Enable code folding
 " set foldmethod=syntax
@@ -351,6 +352,8 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 map <leader>t<leader> :tabnext 
+
+let g:fzf_layout = { 'down': '~40%' }
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
