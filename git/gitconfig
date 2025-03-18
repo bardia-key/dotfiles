@@ -2,58 +2,83 @@
     branch = auto
     diff = auto
     status = auto
+
 [color "branch"]
     current = yellow reverse
     local = yellow
     remote = green
+
 [color "status"]
     added = green
     changed = red
     untracked = cyan
+
 [user]
-	name = Bardia Keyoumarsi
-	email = bardia@easypost.com
+    name = Bardia Keyoumarsi
+    email = bardia@easypost.com
+
 [merge]
-	conflictstyle = diff3
+    conflictstyle = diff3
+
 [branch]
-	sort = -authordate
+    sort = -committerdate
+
+[tag]
+    sort = version:refname
+
+[help]
+    autocorrect = prompt
+
+[fetch]
+    prune = true
+    pruneTages = true
+    all = true
+
+[commit]
+    verbose = true
 
 [alias]
-   st = status
-   ci = commit
-   br = branch
-   co = checkout
-   # Clean deleted branches on remote
-   rpo = remote prune origin
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    # Clean deleted branches on remote
+    rpo = remote prune origin
 
-   # new local branch and matching remote branch with your name prefixed
-   nb = !sh -c 'git push origin HEAD:`whoami`/$0 && git checkout -t origin/`whoami`/$0'
-   # remove local and remote branch
-   db = !sh -c 'git push origin :`whoami`/$0 && git br -d `whoami`/$0'
+    # new local branch and matching remote branch with your name prefixed
+    nb = !sh -c 'git push origin HEAD:`whoami`/$0 && git checkout -t origin/`whoami`/$0'
+    # remove local and remote branch
+    db = !sh -c 'git push origin :`whoami`/$0 && git br -d `whoami`/$0'
 
-   # new tag
-   nt = !sh -c 'git tag $0 -am \"$1\" && git push --tags origin'
-   # delete tag
-   dt = !sh -c 'git tag -d "$0" && git push origin :refs/tags/$0'
+    # new tag
+    nt = !sh -c 'git tag $0 -am \"$1\" && git push --tags origin'
+    # delete tag
+    dt = !sh -c 'git tag -d "$0" && git push origin :refs/tags/$0'
 
-   # uncommit / undo commit
-   uc = reset --soft HEAD^
-   # unstage changes / undo stage
-   us = reset HEAD
+    # uncommit / undo commit
+    uc = reset --soft HEAD^
+    # unstage changes / undo stage
+    us = reset HEAD
 
-   # git log with graph
-   lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    # git log with graph
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
 
-   # new ignore
-   ig = update-index --assume-unchanged
-   # undo ignore
-   ui = update-index --no-assume-unchanged
+    # new ignore
+    ig = update-index --assume-unchanged
+    # undo ignore
+    ui = update-index --no-assume-unchanged
 
-   # show merged branches
-   sm = branch --merged
-   # delete merged branches
-   dmb = !sh -c 'git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d' -
+    # show merged branches
+    sm = branch --merged
+    # delete merged branches
+    dmb = !sh -c 'git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d' -
 [core]
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
+
+
 [diff]
-	noprefix = true
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+    noprefix = true
