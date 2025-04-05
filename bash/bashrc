@@ -15,7 +15,7 @@ if [[ -d "$HOME/.files/bin" ]]; then
 fi
 
 # Default editor
-export EDITOR=/usr/bin/vim
+export EDITOR=/opt/homebrew/bin/nvim
 
 # Ignore CTRL-D for five times before exiting shell
 export IGNOREEOF=5

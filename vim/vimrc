@@ -23,46 +23,14 @@
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible              " required                                                                                                                      
-filetype plugin indent on            " required                                                                                                               
+set nocompatible
+filetype plugin indent on
 
-" Installed Plugins
-" ack-vim
-" lightline
-" splitjoin.vim
-" tcomment_vim
-" vim-fugitive
-" vim-go
-                                                                                                                                                              
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable fuzy finder
 set rtp+=~/.fzf
-
-" Lightline
-let g:lightline = {
-\ 'colorscheme': 'jellybeans',
-\ 'active': {
-\   'left': [['paste'], ['relativepath', 'modified']],
-\   'right': [['lineinfo'], ['percent']]
-\ },
-\ 'inactive': {
-\   'left': [['relativepath', 'modified']],
-\   'right': [['lineinfo'], ['percent']]
-\ },
-\ }
-
-
-" Update and show lightline but only if it's visible (e.g., not in Goyo)
-function! s:MaybeUpdateLightline()
-  if exists('#lightline')
-    call lightline#update()
-  end
-endfunction
-
-" Always show the status line
-set laststatus=2
 
 " File explorer
 map <silent> <C-n> :Explore<CR>
@@ -77,26 +45,7 @@ map <silent> <C-x> :term<Up><CR>
 
 " Debugging
 map <leader>db oimport pdb; pdb.set_trace()<ESC>
-
-"--------------------
-" Function: Open tag under cursor in new tab
-" Source:   http://stackoverflow.com/questions/563616/vimctags-tips-and-tricks
-"--------------------
-" map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => rust.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:rustfmt_autosave = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-easy-align
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+map <leader>ry obinding.pry<ESC>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-go
@@ -128,66 +77,6 @@ autocmd FileType go nmap <leader>t :<C-u>call <SID>test_go_func()<CR>
 map <C-f> :cnext<CR>
 map <C-a> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vim-ale
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ale_fixers = {
-    \ 'ruby': ['rubocop'],
-    \ 'rspec': ['rubocop'],
-    \ 'javascript.jsx': ['eslint'],
-    \ 'javascript': ['eslint'],
-    \ 'json': ['jq'],
-    \ 'lua': ['lua-format'],
-    \ 'sh': ['shfmt'],
-    \ }
-
-let g:ale_linters = {
-    \ 'ruby': ['rubocop'],
-    \ 'rspec': ['rubocop'],
-    \ 'javascript.jsx': ['eslint'],
-    \ 'javascript': ['eslint'],
-    \ }
-
-let g:ale_fix_on_save = 1
-let g:ale_keep_list_window_open = 0
-let g:ale_lint_delay = 200
-let g:ale_lint_on_enter = 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 'always'
-let g:ale_open_list = 0
-let g:ale_ruby_bundler_executable = 'bundle'
-let g:ale_ruby_rubocop_executable = 'bundle'
-let g:ale_set_highlights = 1
-let g:ale_set_loclist = 0
-let g:ale_linters_explicit = 1
-let g:ale_set_quickfix = 0
-let g:ale_set_signs = 1
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_offset = 1000000
-let g:ale_sign_warning = '--'
-let g:ale_completion_enabled = 0
-let g:ale_virtualtext_cursor = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => ruby
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>ry obinding.pry<ESC>
-
-function s:run_single_ruby_test()
-    let linenum = line('.')
-    let file = expand('%')
-    execute 'term make test TARGET=' . file . ':' . linenum
-endfunction
-
-autocmd FileType ruby nmap <leader>t :term make test TARGET=%<CR>
-autocmd FileType ruby nmap <leader>e :<C-u>call <SID>run_single_ruby_test()<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => previm
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:previm_open_cmd = 'open -a Firefox'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -229,6 +118,7 @@ set lazyredraw
 
 " Show matching brackets when text indicator is over them
 set showmatch 
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -237,6 +127,18 @@ set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""                   
+" => ruby
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""                   
+function s:run_single_ruby_test()
+    let linenum = line('.')
+    let file = expand('%')
+    execute 'term make test TARGET=' . file . ':' . linenum
+endfunction
+
+autocmd FileType ruby nmap <leader>t :term make test TARGET=%<CR>
+autocmd FileType ruby nmap <leader>e :<C-u>call <SID>run_single_ruby_test()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -271,10 +173,11 @@ set encoding=utf8
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Protect changes between writes. Default values of
-" updatecount (200 keystrokes) and updatetime
-" (4 seconds) are fine
+" updatecount (200 keystrokes) 
 set swapfile
 set directory^=~/.vim/swap//
+
+set updatetime=300
 
 " protect against crash-during-write
 set writebackup
@@ -282,12 +185,6 @@ set writebackup
 set nobackup
 " use rename-and-write-new method whenever safe
 set backupcopy=auto
-" patch required to honor double slash at end
-if has("patch-8.1.0251")
-	" consolidate the writebackups -- not a big
-	" deal either way, since they usually get deleted
-	set backupdir^=~/.vim/backup//
-end
 
 " persist the undo tree for each file
 set undofile
@@ -352,8 +249,6 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 map <leader>t<leader> :tabnext 
-
-let g:fzf_layout = { 'down': '~40%' }
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1

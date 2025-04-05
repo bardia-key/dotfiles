@@ -1,1 +1,2 @@
 brew install fd
+brew install rg

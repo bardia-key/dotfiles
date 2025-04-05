@@ -1,8 +1,15 @@
+https://github.com/mileszs/ack.vim.git
+https://github.com/editorconfig/editorconfig-vim.git
+https://github.com/itchyny/lightline.vim
 https://github.com/AndrewRadev/splitjoin.vim
 https://github.com/tomtom/tcomment_vim
 https://github.com/tpope/vim-fugitive.git
 https://github.com/fatih/vim-go.git
+https://github.com/rust-lang/rust.vim
 https://github.com/junegunn/fzf.vim.git
 https://github.com/junegunn/vim-easy-align.git
 https://github.com/tpope/vim-dotenv.git
 https://github.com/tpope/vim-surround
+https://github.com/SirVer/ultisnips.git
+https://github.com/w0rp/ale.git
+https://github.com/rust-lang/rust.vim

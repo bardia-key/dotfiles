@@ -1,4 +1,4 @@
-.PHONY: bash tmux vim git qute
+.PHONY: bash tmux vim git qute nvim
 all: .PHONY
 
 DOTFILES := $(shell pwd)
@@ -20,6 +20,8 @@ vim:
 	cp -r $(DOTFILES)/vim/colors ${HOME}/.vim/
 	ln -fs $(DOTFILES)/vim/vimrc ${HOME}/.vimrc
 	$(DOTFILES)/vim/setup_plugins.sh $(DOTFILES)/vim/plugins.txt
+nvim:
+	ln -fns $(DOTFILES)/nvim/ ${HOME}/.config/nvim
 git:
 	ln -fs $(DOTFILES)/git/gitconfig ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/gitcommit ${HOME}/.gitcommit
