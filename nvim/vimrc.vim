@@ -49,10 +49,10 @@ set mouse=
 function s:run_single_ruby_test()
     let linenum = line('.')
     let file = expand('%')
-    execute 'term make test TARGET=' . file . ':' . linenum
+    execute 'TermExec cmd="make test TARGET=' . file . ':' . linenum . '"'
 endfunction
 
-autocmd FileType ruby nmap <leader>t :term make test TARGET=%<CR>
+autocmd FileType ruby nmap <leader>t :TermExec cmd="make test TARGET=%"<CR>
 autocmd FileType ruby nmap <leader>e :<C-u>call <SID>run_single_ruby_test()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

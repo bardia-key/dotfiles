@@ -1,8 +1,6 @@
-all: bash tmux vim git nvim brew
-	@echo "All dotfiles have been set up!"
-
 DOTFILES := $(shell pwd)
 
+.PHONY: bash
 bash:
 	ln -fs ${DOTFILES}/bash/alias ${HOME}/.alias
 	ln -fns $(DOTFILES)/etc/ ${HOME}/etc
@@ -10,10 +8,12 @@ bash:
 	ln -fs $(DOTFILES)/bash/bash_profile ${HOME}/.bash_profile
 	$(DOTFILES)/bash/install_fzf.sh
 
+.PHONY: tmux
 tmux:
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true
 	ln -fs $(DOTFILES)/tmux/tmux.conf ${HOME}/.tmux.conf
 
+.PHONY: vim
 vim:
 	mkdir -p ${HOME}/.vim/pack/plugins/start/
 	mkdir -p ${HOME}/.vim/swap
@@ -23,19 +23,23 @@ vim:
 	ln -fs $(DOTFILES)/vim/vimrc ${HOME}/.vimrc
 	$(DOTFILES)/vim/setup_plugins.sh $(DOTFILES)/vim/plugins.txt
 
+.PHONY: nvim
 nvim:
 	ln -fns $(DOTFILES)/nvim/ ${HOME}/.config/nvim
 
+.PHONY: git
 git:
 	ln -fs $(DOTFILES)/git/gitconfig ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/gitcommit ${HOME}/.gitcommit
 	ln -fs $(DOTFILES)/git/gitignore ${HOME}/.gitignore
 
+.PHONY: brew
 brew:
 ifeq ($(shell uname -s),Darwin)
 	brew install fzf fd ripgrep
 endif
 
+.PHONY: clean
 clean:
 	@echo "Cleaning up symbolic links..."
 	rm -f $(HOME)/.alias
@@ -50,3 +54,7 @@ clean:
 	rm -rf $(HOME)/etc
 	rm -rf $(HOME)/.vim
 	@echo "Cleanup complete!"
+
+.PHONY: all
+all: bash tmux vim git nvim brew
+	@echo "All dotfiles have been set up!"
