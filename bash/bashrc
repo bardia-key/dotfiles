@@ -14,9 +14,6 @@ if [[ -d "$HOME/.files/bin" ]]; then
 	PATH="$HOME/.files/bin:$PATH"
 fi
 
-# Default editor
-export EDITOR=/opt/homebrew/bin/nvim
-
 # Ignore CTRL-D for five times before exiting shell
 export IGNOREEOF=5
 
@@ -40,3 +37,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --e
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

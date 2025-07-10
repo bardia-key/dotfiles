@@ -4,5 +4,7 @@ return {
     config = function()
         -- Enable splitjoin
         require('mini.splitjoin').setup()
+        -- Enable indentscope
+        require('mini.indentscope').setup()
     end,
 }
