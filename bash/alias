@@ -91,7 +91,7 @@ alias gd='git diff'
 alias gb='git branch'
 alias gau="git add -u"
 alias gaa="git add -A"
-alias gds='GIT_PAGER=cat git diff --stat'
+alias gds='git diff --staged'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 
 alias untar='tar xvfz'
