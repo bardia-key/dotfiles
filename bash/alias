@@ -14,10 +14,6 @@ f() {
 	fzf --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat {} || cat {}) 2> /dev/null | head -500'
 }
 
-zd() {
-	cd $(find $1 -type d | f)
-}
-
 fixssh() {
   tmux show-environment > /tmp/tmux_ssh_env_swap
   for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
@@ -55,10 +51,6 @@ shopt -s nullglob
 EOF
 }
 
-git-rebase-style() {
-	git rebase -x "git diff HEAD~1 --name-status | egrep -v '^D' | egrep '*.rb' | awk '{print \$2}' | xargs bundle exec rubocop -a --force-exclusion" $1
-}
-
 current-version() {
 	git tag -l 'v*' | sed -E 's/^v//g' | sort -g | tail -n 1
 }
@@ -73,15 +65,16 @@ alias shutdown='sudo halt'
 alias apt-get='sudo apt-get'
 alias root='sudo su -'
 alias sp='source ~/.bash_profile'
-alias nerd='vim +NERDTree'
 alias nv='nvim'
 
+alias rcd='cd -'
 alias ..='cd ../'                
 alias ...='cd ../../'            
 alias .3='cd ../../../'          
 alias .4='cd ../../../../'       
 alias .5='cd ../../../../../'    
 alias .6='cd ../../../../../../' 
+
 
 alias cp='cp -i'
 alias mv='mv -i'
@@ -99,28 +92,7 @@ alias gb='git branch'
 alias gds='GIT_PAGER=cat git diff --stat'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 
-# ruby
-alias b='bundle-hack'
-alias bi='bundle-hack install'
-alias be='bundle-exec-hack'
-alias bl='bundle install --local'
-alias guard='be guard'
-alias r='be rspec'
-alias rff='r --fail-fast'
-alias reado="ssh-reagent $*"
-
-alias pg-start='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
-alias pg-stop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
-alias v='vagrant'
-
 alias untar='tar xvfz'
-alias tfl='tail -Fn30 log/*.log'
-alias c="clear"
-alias pt=papertrail
-alias fucking='sudo'
-alias k='kubectl'
-
-alias rba='be rubocop -a'
 
 alias curlb='curl -s'
 alias curls='curl -svo /dev/null'
@@ -134,29 +106,14 @@ elif [[ $OSTYPE =~ 'darwin' ]]; then
 fi
 
 alias cpr='copy -r'
-alias rake='noglob rake'
-alias mt='(bundle-hack check || bundle) && minitest -Itest/ '
 alias rn='r --next-failure'
 alias copy="tr -d '\n' | pbcopy"
 alias gpr="hub pull-request"
 alias prco='hub pr list | fzf | egrep -o "\d+" | xargs hub pr checkout'
 alias rmr='rm -r'
 alias lal='ls -alh'
-alias t=terraform
-alias gpro='hub pull-request -o'
 alias lt='tree -L 1 -C'
 
-if hash xsel 2>/dev/null; then
-	alias pbcopy='xsel --clipboard --input'
-	alias pbpaste='xsel --clipboard --output'
-fi
-alias to_html="w3m -dump -T text/html"
-alias mytop="vtop -t monokai"
 alias ssh="TERM=xterm-256color ssh"
 alias wip="git add -A >/dev/null && git commit -m \"wip\" >/dev/null && echo \"it good\""
-alias arc-revision="git log origin/master..HEAD | grep 'Differential Revision' | grep -o \"https://phab\\..*\" | head -n1 | xargs basename 2>/dev/null"
-alias arc-update="arc-revision | xargs arc diff --update"
-alias arc-land="arc land --merge"
-alias vcr='be env VCR_RECORD=all rspec'
 alias port_kill='cat .env .env-override | egrep "^PORT" | egrep -o "[0-9]+$" | xargs -i{} lsof -ti :{} | xargs kill -9'
-alias reshell="exec -l $SHELL"
