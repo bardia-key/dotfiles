@@ -1,5 +1,7 @@
 return {
     "folke/noice.nvim",
+    -- too much noise and distracting windows
+    enabled = false,
     event = "VeryLazy",
     opts = {
         lsp = {
