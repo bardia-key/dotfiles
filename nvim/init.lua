@@ -103,6 +103,39 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end
 })
 
+-- Go development configuration
+vim.g.go_fmt_command = "goimports"
+vim.g.go_list_type = "quickfix"
+
+-- Go build function - run GoBuild or GoTestCompile based on file type
+local function build_go_files()
+  local file = vim.fn.expand('%')
+  if file:match('_test%.go$') then
+    vim.cmd('GoTestCompile')
+  elseif file:match('%.go$') then
+    vim.cmd('GoBuild')
+  end
+end
+
+-- Go test function
+local function test_go_func()
+  vim.cmd('GoTestFunc')
+end
+
+-- Go-specific key mappings
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "go",
+  callback = function()
+    vim.keymap.set("n", "<leader>b", build_go_files, { buffer = true, desc = "Build Go files" })
+    vim.keymap.set("n", "<leader>t", test_go_func, { buffer = true, desc = "Test Go function" })
+  end
+})
+
+-- Quickfix navigation mappings (global)
+vim.keymap.set("n", "<C-f>", ":cnext<CR>", { desc = "Next quickfix item" })
+vim.keymap.set("n", "<C-a>", ":cprevious<CR>", { desc = "Previous quickfix item" })
+vim.keymap.set("n", "<leader>a", ":cclose<CR>", { desc = "Close quickfix" })
+
 -- Delete trailing whitespace on save
 local function delete_trailing_ws()
   local save_cursor = vim.fn.getpos(".")
