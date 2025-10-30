@@ -41,6 +41,13 @@ git:
 	@ln -fs $(DOTFILES)/git/gitignore ${HOME}/.gitignore || (echo "Failed to link gitignore" && exit 1)
 	@echo "Git setup complete!"
 
+.PHONY: opencode
+opencode:
+	@echo "Setting up OpenCode configuration..."
+	@mkdir -p ${HOME}/.config/opencode || (echo "Failed to create OpenCode config directory" && exit 1)
+	@ln -fns $(DOTFILES)/opencode/opencode.json ${HOME}/.config/opencode/opencode.json || (echo "Failed to link OpenCode settings" && exit 1)
+	@echo "OpenCode setup complete!"
+
 .PHONY: brew
 brew:
 ifeq ($(shell uname -s),Darwin)
