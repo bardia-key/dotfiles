@@ -15,10 +15,24 @@
   },
   "permission": {
     "edit": "ask",
-    "bash": "ask"
+    "bash": {
+        "*": "ask",
+        "git *": "allow",
+        "ls *": "allow",
+        "grep *": "allow",
+        "find *": "allow",
+        "head *": "allow",
+        "tail *": "allow",
+        "cd *": "allow",
+        "make *": "allow",
+        "cat *": "allow",
+        "xargs *": "allow",
+        "rg *": "allow",
+        "rm *": "deny"
+    }
   },
   "keybinds": {
-    "messages_half_page_up": "ctrl+u",
-    "messages_half_page_down": "ctrl+d"
+    "messages_half_page_up": "ctrl+y",
+    "messages_half_page_down": "ctrl+e"
   }
 }

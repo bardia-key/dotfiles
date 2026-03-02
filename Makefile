@@ -46,6 +46,7 @@ opencode:
 	@echo "Setting up OpenCode configuration..."
 	@mkdir -p ${HOME}/.config/opencode || (echo "Failed to create OpenCode config directory" && exit 1)
 	@ln -fns $(DOTFILES)/opencode/opencode.json ${HOME}/.config/opencode/opencode.json || (echo "Failed to link OpenCode settings" && exit 1)
+	@ln -fns $(DOTFILES)/opencode/skills ${HOME}/.config/opencode/skills || (echo "Failed to link OpenCode skills" && exit 1)
 	@echo "OpenCode setup complete!"
 
 .PHONY: brew
