@@ -1,6 +1,6 @@
 return {
     'echasnovski/mini.nvim',
-    version = false,
+    version = '*',
     config = function()
         require('mini.splitjoin').setup()
         require('mini.indentscope').setup()
