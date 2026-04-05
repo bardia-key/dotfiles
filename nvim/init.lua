@@ -22,7 +22,6 @@ vim.opt.textwidth = 79
 vim.opt.softtabstop = 4
 vim.opt.linebreak = true
 vim.opt.autoindent = true
-vim.opt.smartindent = true
 vim.opt.wrap = true
 
 -- GUI options
