@@ -1,0 +1,72 @@
+# set PATH so it includes user's private bin if it exists
+if [[ -d "$HOME/bin" ]]; then
+	PATH="$HOME/bin:$PATH"
+fi
+
+# xdg-derived, systemd file-hierarchy
+if [[ -d "$HOME/.local/bin" ]]; then
+	PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [[ -d "$HOME/.files/bin" ]]; then
+	PATH="$HOME/.files/bin:$PATH"
+fi
+
+# Ignore CTRL-D for five times before exiting shell
+export IGNOREEOF=5
+
+# Use emacs-style line editing (gives Ctrl+r, Ctrl+f, Ctrl+b, Ctrl+p, etc.)
+bindkey -e
+
+# Enhanced git status function for prompt
+git_prompt_info() {
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        local branch=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
+        local git_status=""
+
+        # Check for unstaged changes
+        [[ -n $(git status --porcelain 2>/dev/null | grep '^.M\|^.A\|^.D') ]] && git_status="${git_status}*"
+        # Check for staged changes
+        [[ -n $(git status --porcelain 2>/dev/null | grep '^M\|^A\|^D') ]] && git_status="${git_status}+"
+        # Check for untracked files
+        [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]] && git_status="${git_status}?"
+
+        echo " (${branch}${git_status})"
+    fi
+}
+
+# Two-line prompt with timestamp, git branch and status
+# Uses zsh prompt expansion syntax (setopt PROMPT_SUBST required)
+setopt PROMPT_SUBST
+PROMPT='%F{cyan}┌─[%F{yellow}%T%F{cyan}]─[%F{green}%n@%F{240}%m%F{cyan}]─[%F{yellow}%~%F{cyan}]%F{red}$(git_prompt_info)%F{cyan}
+└─%F{green}%#%f '
+
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+
+# History settings (zsh equivalents of bash shopt/HIST* vars)
+setopt APPEND_HISTORY        # equivalent to shopt -s histappend
+setopt HIST_REDUCE_BLANKS    # equivalent to shopt -s cmdhist
+setopt SHARE_HISTORY         # share history across sessions
+setopt HIST_IGNORE_DUPS      # ignore consecutive duplicates
+setopt HIST_IGNORE_SPACE     # ignore commands starting with space
+setopt EXTENDED_HISTORY      # save timestamp with each entry
+
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=1000000
+export SAVEHIST=1000000
+
+export EDITOR='nvim'
+
+# use fd instead of find in fzf
+# honors .fdignore per dir
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Load aliases
+[ -f ~/.alias ] && source ~/.alias
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"           # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm completion

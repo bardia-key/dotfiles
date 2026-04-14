@@ -1,0 +1,125 @@
+#!/bin/zsh
+
+kp() {
+  local pid=$(ps -ax | sed 1d | eval "fzf ${FZF_DEFAULT_OPTS} -m --header='[kill:process]'" | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]; then
+    echo $pid | xargs kill -${1:-9}
+    kp
+  fi
+}
+
+f() {
+  fzf --preview '[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat {} || cat {}) 2> /dev/null | head -500'
+}
+
+fixssh() {
+  tmux show-environment > /tmp/tmux_ssh_env_swap
+  for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
+    if (grep "^${key}" /tmp/tmux_ssh_env_swap > /dev/null 2>&1); then
+      value=$(grep "^${key}" /tmp/tmux_ssh_env_swap | sed -e "s/^[A-Z_]*=//")
+      echo "setting ${key}=${value}"
+      export ${key}="${value}"
+    fi
+  done
+}
+
+loadenv() {
+  local cwd=$(pwd)
+  echo "loading the following env vars"
+  grep -v '^#' "${cwd}"/.env
+  export $(grep -v '^#' "${cwd}"/.env | xargs)
+}
+
+tailsql() {
+  sudo mysql -e "SET GLOBAL general_log = 'ON';"
+  sudo less +F $(mysql -Nse "SELECT @@general_log_file")
+  sudo mysql -e "SET GLOBAL general_log = 'OFF';"
+}
+
+myip() {
+  echo $(dig +short myip.opendns.com @resolver1.opendns.com)
+}
+
+zsh-script() {
+  cat > $1 << 'EOF'
+#!/bin/zsh
+
+set -eu -o pipefail
+setopt NULL_GLOB
+EOF
+}
+
+current-version() {
+  git tag -l 'v*' | sed -E 's/^v//g' | sort -g | tail -n 1
+}
+
+current-semver() {
+  git tag -l | grep -E '[0-9]+\.[0-9]+\.[0-9]+' | sort -g | tail -n 1
+}
+
+# zsh
+alias restart='sudo reboot'
+alias shutdown='sudo halt'
+alias apt-get='sudo apt-get'
+alias root='sudo su -'
+alias sp='source ~/.zshrc'
+alias nv='nvim'
+
+alias rcd='cd -'
+alias ..='cd ../'
+alias ...='cd ../../'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../../'
+alias .6='cd ../../../../../../'
+
+alias cp='cp -i'
+alias mv='mv -i'
+alias ll='ls -FGlAhp'
+alias less='less -FRXc'
+alias qfind="find . -name "
+alias path='echo -e ${PATH//:/\\n}'         # path: Echo all executable Paths
+
+# git
+alias g="git"
+alias gs='git status'
+alias gl='git log'
+alias gd='git diff'
+alias gb='git branch'
+alias gau="git add -u"
+alias gaa="git add -A"
+alias gds='git diff --staged'
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+
+alias untar='tar xvfz'
+
+alias curlb='curl -s'
+alias curls='curl -svo /dev/null'
+alias curl-ttfb='curls -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n"'
+
+## Set ls options per platform
+if [[ $OSTYPE == 'linux-gnu'* ]]; then
+  alias ls='ls -p --color=auto'
+elif [[ $OSTYPE =~ 'darwin' ]]; then
+  alias ls='ls -Gp'
+fi
+
+alias cpr='cp -r'
+alias rn='r --next-failure'
+alias copy="tr -d '\n' | pbcopy"
+alias gpr="hub pull-request"
+alias prco='hub pr list | fzf | grep -oE "\d+" | xargs hub pr checkout'
+alias rmr='rm -r'
+alias lal='ls -alh'
+alias lt='tree -L 1 -C'
+
+alias ssh="TERM=xterm-256color ssh"
+alias wip="git add -A >/dev/null && git commit -m \"wip\" >/dev/null && echo \"it good\""
+alias port_kill='cat .env .env-override | grep -E "^PORT" | grep -oE "[0-9]+$" | xargs -I{} lsof -ti :{} | xargs kill -9'
+
+# directory navigation with fzf
+zd() {
+  local dir
+  dir=$(fd --type d --hidden --follow --exclude .git 2>/dev/null | fzf +m) && cd "$dir"
+}

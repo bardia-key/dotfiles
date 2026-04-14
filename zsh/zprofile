@@ -1,0 +1,23 @@
+#!/bin/zsh
+# .zprofile — sourced for login shells (equivalent of .bash_profile)
+
+source "${HOME}/.zshrc"
+
+# Load custom completions
+if [ -d "$HOME/etc/bash_completion.d" ]; then
+  for f in $HOME/etc/bash_completion.d/*.bash; do
+    source "$f"
+  done
+fi
+
+# Load system-wide completions (if available)
+if [ -f /etc/bash_completion ]; then
+  source /etc/bash_completion
+fi
+
+# EasyPost-specific config (if present)
+if [ -f "$HOME/.ep_zshrc" ]; then
+  source "$HOME/.ep_zshrc"
+elif [ -f "$HOME/.ep_bashrc" ]; then
+  source "$HOME/.ep_bashrc"
+fi

@@ -10,6 +10,16 @@ bash:
 	@$(DOTFILES)/bash/install_fzf.sh || (echo "Failed to install FZF" && exit 1)
 	@echo "Bash setup complete!"
 
+.PHONY: zsh
+zsh:
+	@echo "Setting up zsh configuration..."
+	@ln -fs ${DOTFILES}/zsh/alias ${HOME}/.alias || (echo "Failed to link alias file" && exit 1)
+	@ln -fns $(DOTFILES)/etc/ ${HOME}/etc || (echo "Failed to link etc directory" && exit 1)
+	@ln -fs $(DOTFILES)/zsh/zshrc ${HOME}/.zshrc || (echo "Failed to link zshrc" && exit 1)
+	@ln -fs $(DOTFILES)/zsh/zprofile ${HOME}/.zprofile || (echo "Failed to link zprofile" && exit 1)
+	@$(DOTFILES)/zsh/install_fzf.sh || (echo "Failed to install FZF" && exit 1)
+	@echo "Zsh setup complete!"
+
 .PHONY: tmux
 tmux:
 	@echo "Setting up tmux..."
@@ -62,10 +72,10 @@ endif
 .PHONY: clean
 clean:
 	@echo "Cleaning up symbolic links..."
-	@rm -f $(HOME)/.alias $(HOME)/.bashrc $(HOME)/.bash_profile $(HOME)/.tmux.conf $(HOME)/.vimrc $(HOME)/.gitconfig $(HOME)/.gitcommit $(HOME)/.gitignore $(HOME)/.config/nvim
+	@rm -f $(HOME)/.alias $(HOME)/.bashrc $(HOME)/.bash_profile $(HOME)/.zshrc $(HOME)/.zprofile $(HOME)/.tmux.conf $(HOME)/.vimrc $(HOME)/.gitconfig $(HOME)/.gitcommit $(HOME)/.gitignore $(HOME)/.config/nvim
 	@rm -rf $(HOME)/etc $(HOME)/.vim
 	@echo "Cleanup complete!"
 
 .PHONY: all
-all: bash tmux vim git nvim brew
+all: bash zsh tmux vim git nvim brew
 	@echo "All dotfiles have been set up!"

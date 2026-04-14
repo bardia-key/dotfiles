@@ -9,18 +9,23 @@ Personal dotfiles configuration for **Bardia Keyoumarsi** - a Ruby/Go developer 
 ### Core Philosophy
 - **Keyboard-driven workflows** with heavy FZF integration
 - **Development-focused** with Ruby/Go toolchain optimization  
-- **Terminal-centric** environment using bash, vim/neovim, tmux
+- **Terminal-centric** environment using bash/zsh, vim/neovim, tmux
 - **Modular installation** via Makefile with symbolic links
 
 ## Repository Structure
 
 ```
 dotfiles/
-├── bash/           # Shell configuration
+├── bash/           # Bash shell configuration
 │   ├── alias       # Custom aliases and functions
 │   ├── bashrc      # Shell settings and prompt
 │   ├── bash_profile # Profile loader
 │   └── install_fzf.sh # FZF installer
+├── zsh/            # Zsh shell configuration
+│   ├── alias       # Custom aliases and functions (zsh-native)
+│   ├── zshrc       # Shell settings and prompt
+│   ├── zprofile    # Profile loader (login shells)
+│   └── install_fzf.sh # FZF installer for zsh
 ├── nvim/           # Modern Neovim config (Lua-based)
 │   ├── init.lua    # Entry point
 │   ├── vimrc.vim   # Shared vim settings
@@ -49,7 +54,7 @@ dotfiles/
 ## Key Technologies & Tools
 
 ### Primary Stack
-- **Shell**: Bash with custom prompt and extensive aliases
+- **Shell**: Bash and Zsh with custom prompt and extensive aliases
 - **Editor**: Neovim (primary) + Vim (fallback) 
 - **Multiplexer**: Tmux with TPM plugins
 - **Fuzzy Finder**: FZF (heavily integrated)
@@ -69,7 +74,8 @@ The Makefile provides modular installation:
 
 ```bash
 make all        # Install everything
-make bash       # Shell configuration only  
+make bash       # Bash configuration only
+make zsh        # Zsh configuration only
 make nvim       # Neovim setup only
 make git        # Git configuration only
 make tmux       # Tmux setup only
@@ -144,8 +150,8 @@ zd()    # Fuzzy directory navigation
 5. **Follow existing patterns** - especially color schemes and alias naming
 
 ### Common Tasks
-- **Adding aliases**: Edit `bash/alias` 
-- **Modifying prompt**: Edit the `git_prompt_info()` function in `bash/bashrc`
+- **Adding aliases**: Edit `bash/alias` or `zsh/alias`
+- **Modifying prompt**: Edit the `git_prompt_info()` function in `bash/bashrc` or `zsh/zshrc`
 - **Neovim plugins**: Add to `nvim/lua/plugins/` directory
 - **Git settings**: Modify `git/gitconfig`
 - **Installation steps**: Update `Makefile`
@@ -153,8 +159,10 @@ zd()    # Fuzzy directory navigation
 ### Testing Changes
 ```bash
 # Test specific components
-make clean && make bash    # Test shell changes
-source ~/.bashrc           # Reload shell config  
+make clean && make bash    # Test bash changes
+make clean && make zsh     # Test zsh changes
+source ~/.bashrc           # Reload bash config
+source ~/.zshrc            # Reload zsh config
 nvim                       # Test editor config
 ```
 
@@ -167,6 +175,7 @@ nvim                       # Test editor config
 ## Recent Optimizations
 
 The following improvements were recently made:
+- Added zsh configuration (zshrc, zprofile, alias, install_fzf.sh) mirroring bash setup
 - Fixed `pruneTags` typo in git config
 - Added Go/Ruby parsers to Treesitter
 - Enhanced error handling in installation scripts
