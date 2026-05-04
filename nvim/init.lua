@@ -23,6 +23,8 @@ vim.opt.softtabstop = 4
 vim.opt.linebreak = true
 vim.opt.autoindent = true
 vim.opt.wrap = true
+vim.opt.formatoptions:remove("t")
+vim.opt.colorcolumn = "79"
 
 -- GUI options
 if vim.fn.has("gui_running") == 1 then
