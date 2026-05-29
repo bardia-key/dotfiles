@@ -1,8 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "tui": {
-    "scroll_speed": 5
-  },
   "mcp": {
     "context7": {
       "type": "remote",
@@ -30,9 +27,5 @@
         "rg *": "allow",
         "rm *": "deny"
     }
-  },
-  "keybinds": {
-    "messages_half_page_up": "ctrl+y",
-    "messages_half_page_down": "ctrl+e"
   }
 }

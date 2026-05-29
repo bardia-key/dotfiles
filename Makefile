@@ -59,6 +59,12 @@ opencode:
 	@ln -fns $(DOTFILES)/opencode/skills ${HOME}/.config/opencode/skills || (echo "Failed to link OpenCode skills" && exit 1)
 	@echo "OpenCode setup complete!"
 
+.PHONY: kitty
+kitty:
+	@echo "Setting up Kitty configuration..."
+	@mkdir -p ${HOME}/.config/kitty || (echo "Failed to create Kitty config directory" && exit 1)
+	@ln -fns $(DOTFILES)/kitty/kitty.conf ${HOME}/.config/kitty/kitty.conf || (echo "Failed to link Kitty settings" && exit 1)
+
 .PHONY: brew
 brew:
 ifeq ($(shell uname -s),Darwin)
