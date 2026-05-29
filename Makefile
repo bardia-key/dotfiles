@@ -33,7 +33,7 @@ vim:
 	@mkdir -p ${HOME}/.vim/pack/plugins/start/ ${HOME}/.vim/swap ${HOME}/.vim/backup ${HOME}/.vim/undodir || (echo "Failed to create vim directories" && exit 1)
 	@cp -r $(DOTFILES)/vim/colors ${HOME}/.vim/ || (echo "Failed to copy vim colors" && exit 1)
 	@ln -fs $(DOTFILES)/vim/vimrc ${HOME}/.vimrc || (echo "Failed to link vimrc" && exit 1)
-	@$(DOTFILES)/vim/setup_plugins.sh $(DOTFILES)/vim/plugins.txt || (echo "Failed to setup vim plugins" && exit 1)
+	# @$(DOTFILES)/vim/setup_plugins.sh $(DOTFILES)/vim/plugins.txt || (echo "Failed to setup vim plugins" && exit 1)
 	@echo "Vim setup complete!"
 
 .PHONY: nvim
