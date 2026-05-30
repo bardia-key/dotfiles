@@ -15,3 +15,7 @@ fi
 if [ -f "$HOME/.ep_bashrc" ]; then
 	. $HOME/.ep_bashrc
 fi
+
+if [ -f "$HOME/.pifive_bashrc" ]; then
+	. $HOME/.pifive_bashrc
+fi
