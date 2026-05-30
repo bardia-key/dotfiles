@@ -3,17 +3,20 @@
 
 source "${HOME}/.zshrc"
 
-# Load custom completions
+# Load custom completions (zsh-compatible only)
+autoload -Uz compinit && compinit
 if [ -d "$HOME/etc/bash_completion.d" ]; then
   for f in $HOME/etc/bash_completion.d/*.bash; do
+    # Skip bash-specific completion files in zsh (use zsh's built-in git completion instead)
+    [[ "$f" == *git-completion.bash ]] && continue
     source "$f"
   done
 fi
 
-# Load system-wide completions (if available)
-if [ -f /etc/bash_completion ]; then
-  source /etc/bash_completion
-fi
+# Load system-wide completions (if available, bash only)
+# if [ -f /etc/bash_completion ]; then
+#   source /etc/bash_completion
+# fi
 
 # EasyPost-specific config (if present)
 if [ -f "$HOME/.ep_zshrc" ]; then
