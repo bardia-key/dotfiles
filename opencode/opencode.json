@@ -13,7 +13,6 @@
   "permission": {
     "edit": "ask",
     "bash": {
-        "*": "ask",
         "git *": "allow",
         "ls *": "allow",
         "echo *": "allow",
@@ -25,6 +24,7 @@
         "cd *": "allow",
         "make *": "allow",
         "cat *": "allow",
+        "sed *": "allow",
         "xargs *": "allow",
         "rg *": "allow",
         "rm *": "deny"
