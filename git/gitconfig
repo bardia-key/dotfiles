@@ -82,3 +82,5 @@
     mnemonicPrefix = true
     renames = true
     noprefix = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
