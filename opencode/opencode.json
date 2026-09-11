@@ -27,6 +27,18 @@
         "sed *": "allow",
         "xargs *": "allow",
         "rg *": "allow",
+        "git commit*": "ask",
+        "git rebase*": "ask",
+        "git reset*": "ask",
+        "git merge*": "ask",
+        "git cherry-pick*": "ask",
+        "git filter-branch*": "ask",
+        "git amend*": "ask",
+        "git push*": "ask",
+        "git fetch*": "ask",
+        "git pull*": "ask",
+        "git remote*": "ask",
+        "gh *": "ask",
         "rm *": "deny"
     }
   }
