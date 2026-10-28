@@ -39,6 +39,8 @@
         "git pull*": "ask",
         "git remote*": "ask",
         "gh *": "ask",
+        "python3 *": "ask",
+        "python *": "ask",
         "rm *": "deny"
     }
   }
