@@ -5,7 +5,7 @@
 - Do not `git commit`, `--amend`, `git push` or `gh pr edit` unless asked. Ask whether to amend or add a new commit when a change belongs to an existing commit.
 - Stage explicit paths. After committing, confirm with `git show --stat` and `git status`.
 - One concern per PR. Refactor, flag removal and behavior change are separate PRs, each referencing the others.
-- Branch names: the ticket in the name (`EP-109-...`) or the author prefix style the user uses (`bardia/<topic>`).
+- Branch names: always `bardia/<topic>`, or `bardia/<TICKET>-<topic>` when there is a ticket (`bardia/EP-109-whoami-cleanup`). Never create a branch without the `bardia/` prefix. Repos that ask for ticket-based names are satisfied by putting the ticket after the prefix.
 
 ## Commit messages
 

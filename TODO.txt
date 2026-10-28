@@ -22,5 +22,9 @@ opencode: repo-rules plugin (V2 server plugin, ~/dotfiles/opencode/plugins/repo-
      ("run /verify before saying done"). Clear it when the script runs.
   4. Optional custom tool: register easy_post_verify with ctx.tool.transform that runs
      scripts/easy-post-verify.sh and returns the summary, so the model calls a tool instead of composing shell.
+  5. Branch-name guard: reject `git checkout -b`, `git switch -c` and `git branch <name>` when the new name does
+     not start with `bardia/`. A static policy cannot express this (patterns cannot say "not starting with", and
+     `git branch *` is also used for reads like --show-current), so it needs the execute.before hook. Until then
+     the rule lives in opencode/AGENTS.md and the easy-post-dev skill.
   Open questions: hard fail vs ask for denied commands; per-session vs per-repo scope for (1); how to test hooks
   locally (opencode --standalone with OPENCODE_LOG_LEVEL=DEBUG, log in ~/.local/share/opencode/log/opencode.log).

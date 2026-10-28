@@ -63,6 +63,7 @@ Or run `/verify`. Paste the result summary, including any WARN lines. Do not cla
 
 ## 6. Commit, push, PR
 
+- Create new branches as `bardia/<topic>` (or `bardia/<TICKET>-<topic>`), from `origin/<base>`. Never without the prefix.
 - Never run `git commit`, `--amend`, `git push` or `gh pr edit` unless asked.
 - Stage explicit paths. A failing pathspec aborts the whole `git add`, so check its result. After committing, run `git show --stat` and confirm the tree is clean.
 - Follow the message style requested (brief or detailed). Reference related PRs, plan docs and tickets.
