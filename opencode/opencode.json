@@ -43,5 +43,10 @@
         "python *": "ask",
         "rm *": "deny"
     }
-  }
+  },
+  "policies": [
+    { "action": "tool.use", "resource": "shell:sed -i*", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:sed * -i*", "effect": "deny" },
+    { "action": "tool.use", "resource": "shell:sed *--in-place*", "effect": "deny" }
+  ]
 }

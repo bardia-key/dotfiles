@@ -1,1 +1,26 @@
 fix .alias overriding between bash and zsh
+
+opencode: repo-rules plugin (V2 server plugin, ~/dotfiles/opencode/plugins/repo-rules) -- deferred
+  Why: skills and AGENTS.md are advisory, the model can skip loading them. A server plugin can enforce and
+  inject deterministically, and it can key off the repo (ctx.location.project.canonical / directory).
+  Setup: register it in opencode.json ("plugins": [{"package": "./plugins/repo-rules", "options": {}}]) and add
+  the plugins dir to the Makefile opencode target. V2 only (running v2.1.3).
+  Docs: https://opencode.ai/v2/docs/build/plugins/server/  (hooks: tool execute.before/after, permission
+  evaluate, session context/prompt, shell create.before).
+  1. Global shell-edit guard (ALL sessions and ALL repos, not only EasyPost):
+     ctx.tool.hook("execute.before") (and/or ctx.permission.hook("evaluate")) rejects shell commands that modify
+     tracked files so edits go through the edit tool. Patterns: sed -i / --in-place, perl -pi / -i,
+     python/python3 -c or heredoc scripts that write files, awk -i inplace, tee, > and >> redirects to tracked
+     paths, git checkout -- <file>, git restore. Keep read-only uses working (sed -n, redirects into /tmp or
+     /tmp/opencode). Return a clear message: "use the edit tool".
+     Already done without the plugin: opencode.json "policies" hard-deny sed -i; permission asks for python/python3.
+  2. EasyPost rules injection: ctx.session.hook("context") pushes a short (~25 line) rules header into
+     event.system when the location matches an EasyPost checkout (easy_post, easypost-web-backend,
+     easypost-web-app). Keep it tiny, it is paid for on every request; detail stays in skills/easy-post-dev.
+  3. Verify reminder: ctx.tool.hook("execute.after") records in ctx.storage that a source file (.rb .py .ts .tsx)
+     was edited and scripts/easy-post-verify.sh has not run since; the next "context" hook adds one line
+     ("run /verify before saying done"). Clear it when the script runs.
+  4. Optional custom tool: register easy_post_verify with ctx.tool.transform that runs
+     scripts/easy-post-verify.sh and returns the summary, so the model calls a tool instead of composing shell.
+  Open questions: hard fail vs ask for denied commands; per-session vs per-repo scope for (1); how to test hooks
+  locally (opencode --standalone with OPENCODE_LOG_LEVEL=DEBUG, log in ~/.local/share/opencode/log/opencode.log).

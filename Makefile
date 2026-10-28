@@ -57,6 +57,10 @@ opencode:
 	@mkdir -p ${HOME}/.config/opencode || (echo "Failed to create OpenCode config directory" && exit 1)
 	@ln -fns $(DOTFILES)/opencode/opencode.json ${HOME}/.config/opencode/opencode.json || (echo "Failed to link OpenCode settings" && exit 1)
 	@ln -fns $(DOTFILES)/opencode/skills ${HOME}/.config/opencode/skills || (echo "Failed to link OpenCode skills" && exit 1)
+	@ln -fns $(DOTFILES)/opencode/commands ${HOME}/.config/opencode/commands || (echo "Failed to link OpenCode commands" && exit 1)
+	@ln -fns $(DOTFILES)/opencode/agents ${HOME}/.config/opencode/agents || (echo "Failed to link OpenCode agents" && exit 1)
+	@ln -fns $(DOTFILES)/opencode/scripts ${HOME}/.config/opencode/scripts || (echo "Failed to link OpenCode scripts" && exit 1)
+	@ln -fns $(DOTFILES)/opencode/AGENTS.md ${HOME}/.config/opencode/AGENTS.md || (echo "Failed to link OpenCode global AGENTS.md" && exit 1)
 	@echo "OpenCode setup complete!"
 
 .PHONY: kitty
