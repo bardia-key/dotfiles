@@ -10,6 +10,11 @@
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       }
     },
+    "stripe": {
+      "type": "remote",
+      "url": "https://mcp.stripe.com",
+      "enabled": true
+    },
     "playwright": {
       "type": "local",
       "command": ["npx", "-y", "@playwright/mcp"],
