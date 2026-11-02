@@ -12,6 +12,10 @@ if [[ -d "$HOME/.files/bin" ]]; then
 	PATH="$HOME/.files/bin:$PATH"
 fi
 
+if [[ -d "$HOME/go/bin" ]]; then
+	PATH="$HOME/go/bin:$PATH"
+fi
+
 # Ignore CTRL-D for five times before exiting shell
 export IGNOREEOF=5
 

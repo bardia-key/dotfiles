@@ -2,7 +2,7 @@
 
 . ${HOME}/.bashrc
 
-source ${HOME}/.alias
+source ${HOME}/.bash_alias
 
 if [ -d "$HOME/etc/bash_completion.d" ]; then
 	. $HOME/etc/bash_completion.d/*.bash

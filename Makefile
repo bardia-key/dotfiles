@@ -3,7 +3,7 @@ DOTFILES := $(shell pwd)
 .PHONY: bash
 bash:
 	@echo "Setting up bash configuration..."
-	@ln -fs ${DOTFILES}/bash/alias ${HOME}/.alias || (echo "Failed to link alias file" && exit 1)
+	@ln -fs ${DOTFILES}/bash/alias ${HOME}/.bash_alias || (echo "Failed to link alias file" && exit 1)
 	@ln -fns $(DOTFILES)/etc/ ${HOME}/etc || (echo "Failed to link etc directory" && exit 1)
 	@ln -fs $(DOTFILES)/bash/bashrc ${HOME}/.bashrc || (echo "Failed to link bashrc" && exit 1)
 	@ln -fs $(DOTFILES)/bash/bash_profile ${HOME}/.bash_profile || (echo "Failed to link bash_profile" && exit 1)
@@ -13,7 +13,7 @@ bash:
 .PHONY: zsh
 zsh:
 	@echo "Setting up zsh configuration..."
-	@ln -fs ${DOTFILES}/zsh/alias ${HOME}/.alias || (echo "Failed to link alias file" && exit 1)
+	@ln -fs ${DOTFILES}/zsh/alias ${HOME}/.zsh_alias || (echo "Failed to link alias file" && exit 1)
 	@ln -fns $(DOTFILES)/etc/ ${HOME}/etc || (echo "Failed to link etc directory" && exit 1)
 	@ln -fs $(DOTFILES)/zsh/zshrc ${HOME}/.zshrc || (echo "Failed to link zshrc" && exit 1)
 	@ln -fs $(DOTFILES)/zsh/zprofile ${HOME}/.zprofile || (echo "Failed to link zprofile" && exit 1)
